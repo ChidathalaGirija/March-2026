@@ -1,0 +1,65 @@
+1) select department,count(employee_id)
+from employees
+group by department
+having count(employee_id)>1;
+output : priya,rahul
+
+2) select job_roles,sum(salary)
+from employees
+group by job_role
+having sum(salary)>60000;
+output : developer,manager
+
+3) select cities,avg(salary)
+from employees
+group by cities
+having avg(salary)>50000;
+output : hyderabad,mumbai,delhi,chennai 
+
+4) select department
+from employees
+group by department
+having max(salary)>65000;
+output :IT
+
+5)  select job_roles ,sum(experiance)
+      from employees
+     group by job_roles
+    having sum(experiance)>5;
+output : 3(analyst,manager,system admin)
+
+6)  select department,avg(age)
+from employees
+group by department
+having avg(age)>30;
+output :  1(finance,)
+
+7)  select  city ,count(employee_id)
+from employees
+where  status = 'active'
+group by city
+having count(employee_id)>1;
+output : no rows
+
+8)  select job_roles ,min(salary)
+from employees
+group by job_roles 
+having min(salary)>40000;
+output : developer,analyst,manager,system admin
+
+9)  select department ,sum(salary)
+from employees
+group by department
+having sum(salary)<100000;
+output : HR,FINANCE,MARKETING
+
+10)  select cities,avg(experience)
+from employees
+group by cities
+having avg(experience)>5;
+output :  Mumbai,delhi,chennai
+
+
+
+
+
