@@ -1,0 +1,97 @@
+OW_NUMBER
+Assign a unique row number to each order based on order_date (oldest to latest).
+Find the latest order for each customer using ROW_NUMBER.
+Retrieve the top 2 highest priced products in each category using ROW_NUMBER.
+🔹 RANK
+Rank all orders based on price in descending order.
+Find the 2nd highest priced product in each category using RANK.
+🔹 DENSE_RANK
+Assign dense rank to products based on price within each category.
+Get the top 3 unique price levels across all products using DENSE_RANK.
+🔹 LEAD
+Display the next order price for each customer based on order_date using LEAD.
+Show the next order date for each customer using LEAD.
+🔹 LAG
+Display the previous order price for each customer based on order_date using lagpartition by
+
+select *
+from
+(
+select order_id,order_date,customer _id,
+row_number()over(partition by order_id order by order_date desc) as row _number
+from orders
+);
+
+select * 
+from
+(
+select customer_id,order_date,
+row_number()over(partition by customer_id order by order_date desc)as row_number
+from orders
+);
+
+select *
+from 
+(
+select product_id, product_price,category,
+row_number()over(partition by category,order by product_price)as row_number
+from product
+)
+where row_number>2;
+
+select *
+from 
+(
+select order_id,order_price,
+Rank()over(partition by order_id order by order_price desc)as rank
+from orders
+)
+where rank>2;
+
+select *
+from 
+(
+select product_price , product_id,category,
+dense_rank()over(partition by category order by product_price)as rnk
+from products
+);
+
+select *
+from
+(
+select product_price,product_id,
+dense_rank()over(partition by product_id order by product_price)as rnk
+from products
+)
+where drnk>3;
+
+select *
+from 
+(
+select order_price,customer_id,order_date,
+lead(order_price)over(partition by customer_id order by order_date )as next_price
+from orders
+);
+
+select *
+from
+(
+select order_date, customer_id,
+lead(order_date)over(partition by customer_id order by order_date)as next_date
+from orders
+);
+
+select *
+from 
+(
+select order_price,customer_id,order_date,
+lag(order_price)over(partition by customer_id order by  order_date)as previous_price
+from orders
+);
+
+
+
+
+
+
+
